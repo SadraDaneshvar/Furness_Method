@@ -75,10 +75,34 @@ In the implementation of the Furness method, a Python script has been developed 
 
 The "Furness" function takes the following inputs:
 
-- **original_matrix:** The initial square matrix that requires scaling.
-- **future_row_sums:** An array representing the desired row sums for the resulting scaled matrix.
-- **future_col_sums:** An array representing the desired column sums for the resulting scaled matrix.
-- **tolerance:** (Optional) The tolerance level for the normalized error. The algorithm iterates until the normalized error falls below this threshold. The default value is set to 0.01, providing flexibility for users to adjust the convergence criteria.
+- `original_matrix`: The initial Origin-Destination (OD) matrix, representing the $t_{ij}$ values, should be provided in the form of a square NumPy array (`np.array`).
+- `future_row_sums`: An array, in `np.array` format, representing the future number of trips originated from each zone.
+- `future_col_sums`: An array, in `np.array` format, representing the future number of trips destined for each zone.
+- `tolerance` (Optional): The tolerance level for the normalized error. The algorithm iterates until the normalized error falls below this threshold. The default value is set to 0.01, providing flexibility for users to adjust the convergence criteria.
 
 This script serves as a practical tool for applying the Furness method, enabling users to implement the algorithm with ease and flexibility while addressing the specific constraints associated with the transportation problem at hand.
+
+``` py
+# Take user input for the matrix
+rows = int(input("Number of zones: "))
+
+original_matrix = []
+for i in range(rows):
+    row = list(map(int,
+            input("Number of trips from zone " + str(i+1) + " to other zones including itself (seprated by comma):").split(",")))
+    original_matrix.append(row)
+
+original_matrix = np.array(original_matrix)
+
+# Take user input for future row sums and column sums
+future_row_sums = np.array(list(map(int,
+                            input("Number of future trips originated from each zone (seperated by comma): ").split(","))))
+future_col_sums = np.array(list(map(int,
+                            input("Number of future trips with destinations in each zone (separated by comma): ").split(","))))
+
+# Take user input for tolerance
+tolerance = float(input("Tolerance (as a decimal, e.g., 0.01): "))
+
+Furness(original_matrix, future_row_sums, future_col_sums, tolerance)
+```
 
