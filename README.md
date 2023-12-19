@@ -207,6 +207,8 @@ Destination  102.000  118.000  106.000  326.000
 Normalized Error: 0.19%
 ```
 
+If you have any feedback, please reach out to me at dsadra80@gmail.com
+
 ## License
 
-[MIT LICENSE](https://www.google.com)
+[MIT LICENSE](LICENSE)
