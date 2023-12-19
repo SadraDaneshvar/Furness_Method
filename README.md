@@ -82,27 +82,131 @@ The "Furness" function takes the following inputs:
 
 This script serves as a practical tool for applying the Furness method, enabling users to implement the algorithm with ease and flexibility while addressing the specific constraints associated with the transportation problem at hand.
 
+> [!IMPORTANT]
+> Integrate this function into your codebase using the following snippet, providing enhanced accessibility from any location. This approach needs an Internet connection. 
+
 ``` py
+import requests
+
+# The URL of the raw Python file on GitHub
+github_url = "https://raw.githubusercontent.com/SadraDaneshvar/Furness_Method/main/furness_method.py"
+
+# Specify the local filename to save the file in the current working directory
+local_filename = "furness_method.py"
+
+# Download the file from GitHub with explicit encoding
+response = requests.get(github_url)
+with open(local_filename, 'w', encoding='utf-8') as file:
+    file.write(response.text)
+
+# Execute the code to make the functions/classes available in the notebook
+exec(compile(response.text, local_filename, 'exec'))
+
+# Now, you can import the module in your notebook
+from furness_method import Furness
+```
+Below is an example showcasing the proper usage of this function with appropriate input formats:
+
+> [!WARNING]
+> Ensure that the `original_matrix`, `future_row_sums`, and `future_col_sums` parameters are provided as NumPy arrays for proper function execution. Using arrays of other types may result in unexpected behavior.
+
+```py
+input_OD_matrix = np.array([[5, 50, 100, 200],
+                           [50, 5, 100, 300],
+                           [50, 100, 5, 100],
+                           [100, 200, 250, 20]])
+
+future_origin_sum = np.array([400, 460, 400, 702])
+future_destination_sum = np.array(260, 400, 500, 802)
+
+tolerance = 0.001
+
+Furness(input_OD_matrix, 
+        future_origin_sum, 
+        future_destination_sum, 
+        tolerance)
+```
+Example output:
+```
+Original OD Matrix:
+             Zone 1  Zone 2  Zone 3  Zone 4  Origin
+Zone 1            5      50     100     200     355
+Zone 2           50       5     100     300     455
+Zone 3           50     100       5     100     255
+Zone 4          100     200     250      20     570
+Destination     205     355     455     620    1635
+
+Future OD Matrix:
+              Zone 1  Zone 2   Zone 3   Zone 4    Origin
+Zone 1         5.213   43.77   97.536  254.092   400.610
+Zone 2        44.901    3.77   84.014  328.298   460.983
+Zone 3        76.800  128.97    7.185  187.175   400.129
+Zone 4       133.086  223.49  311.266   32.435   700.277
+Destination  260.000  400.00  500.000  802.000  1962.000
+
+Normalized Error: 0.18%
+```
+
+
+> [!TIP]
+> For interactive usage, you can employ the following code snippet, allowing users to input the necessary data dynamically:
+
+
+```py
 # Take user input for the matrix
 rows = int(input("Number of zones: "))
 
-original_matrix = []
+input_OD_matrix = []
 for i in range(rows):
     row = list(map(int,
-            input("Number of trips from zone " + str(i+1) + " to other zones including itself (seprated by comma):").split(",")))
-    original_matrix.append(row)
+            input("Number of trips from zone " +
+                  str(i+1) +
+                  " to other zones including itself (seprated by comma):").split(",")))
+    input_OD_matrix.append(row)
 
-original_matrix = np.array(original_matrix)
+input_OD_matrix = np.array(input_OD_matrix)
 
 # Take user input for future row sums and column sums
-future_row_sums = np.array(list(map(int,
-                            input("Number of future trips originated from each zone (seperated by comma): ").split(","))))
-future_col_sums = np.array(list(map(int,
-                            input("Number of future trips with destinations in each zone (separated by comma): ").split(","))))
+future_origin_sum = np.array(list(map(int,
+   input("Number of future trips originated from each zone (seperated by comma): ").split(","))))
+future_destination_sum = np.array(list(map(int,
+   input("Number of future trips with destinations in each zone (separated by comma): ").split(","))))
 
 # Take user input for tolerance
 tolerance = float(input("Tolerance (as a decimal, e.g., 0.01): "))
 
-Furness(original_matrix, future_row_sums, future_col_sums, tolerance)
+Furness(input_OD_matrix, future_origin_sum, future_destination_sum, tolerance)
 ```
 
+And a sample output would be:
+
+```
+# User inputs:
+## Number of zones: 3
+## Number of trips from zone 1 to other zones including itself (seprated by comma):20,30,28
+## Number of trips from zone 2 to other zones including itself (seprated by comma):36,32,24
+## Number of trips from zone 3 to other zones including itself (seprated by comma):22,34,26
+## Number of future trips originated from each zone (seperated by comma): 98,106,122
+## Number of future trips with destinations in each zone (separated by comma): 102,118,106
+## Tolerance (as a decimal, e.g., 0.01): 0.005
+
+Original OD Matrix:
+             Zone 1  Zone 2  Zone 3  Origin
+Zone 1           20      30      28      78
+Zone 2           36      32      24      92
+Zone 3           22      34      26      82
+Destination      78      96      78     252
+
+Future OD Matrix:
+              Zone 1   Zone 2   Zone 3   Origin
+Zone 1        25.802   35.540   36.734   98.075
+Zone 2        42.590   34.764   28.874  106.228
+Zone 3        33.609   47.696   40.392  121.697
+Destination  102.000  118.000  106.000  326.000
+
+Normalized Error: 0.19%
+```
+
+## License
+
+[MIT LICENSE](https://www.google.com)
