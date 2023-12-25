@@ -117,7 +117,7 @@ input_OD_matrix = np.array([[5, 50, 100, 200],
                            [100, 200, 250, 20]])
 
 future_origin_sum = np.array([400, 460, 400, 702])
-future_destination_sum = np.array(260, 400, 500, 802)
+future_destination_sum = np.array([260, 400, 500, 802])
 
 tolerance = 0.001
 
