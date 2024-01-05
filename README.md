@@ -207,9 +207,9 @@ Destination  102.000  118.000  106.000  326.000
 Normalized Error: 0.19%
 ```
 
-### Updates
+## Updates
 
-#### Jan 05, 2024: Enhanced Furness Function with Error Visualization
+### Jan 05, 2024: Enhanced Furness Function with Error Visualization
 
 The `Furness` function in this repository has been recently enhanced to include an integrated error visualization feature. This improvement aims to provide a more insightful understanding of the algorithm's performance over iterations. At the end of each run, the function now automatically generates and displays a plot of the normalized error values against the iteration count. This plot is crucial for analyzing the convergence behavior of the algorithm and for visually assessing the efficiency and stability of the iteration process. This feature is especially useful for data analysts and researchers who require a deeper understanding of the iterative behaviors in their data processing and optimization tasks.
 
